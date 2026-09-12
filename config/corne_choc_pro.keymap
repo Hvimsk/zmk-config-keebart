@@ -33,11 +33,6 @@
     };
 
     macros {
-        /*
-         * Hold this thumb key to enable SYMBOL.
-         * Releasing it also guarantees that Command is released if the
-         * app-switcher macro below latched it while SYMBOL was held.
-         */
         sym_layer: sym_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -50,10 +45,6 @@
                 <&macro_tap &kt_off LGUI>;
         };
 
-        /*
-         * SYMBOL + Tab starts/continues the normal macOS Cmd+Tab switcher.
-         * Command stays held while SYMBOL is held, so Tab can be fluttered.
-         */
         app_switch_tab: app_switch_tab {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -62,7 +53,6 @@
             bindings = <&kt_on LGUI>, <&kp TAB>;
         };
 
-        /* Danish macOS: the grave key is dead, so tap it followed by space. */
         dk_grave: dk_grave {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -75,7 +65,6 @@
 
         default_layer {
             display-name = "QWERTY";
-            // --------------------------------------------------------------------------------
             // |  TAB |  Q  |  W  |  E  |  R  |  T  |  MUTE |  PP   |  Y  |  U   |  I  |  O  |  P  | BSPC |
             // | CTRL |  A  |  S  |  D  |  F  |  G  |  LALT |  RALT |  H  |  J   |  K  |  L  |  ;  |  '   |
             // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
@@ -91,36 +80,36 @@
 
         lower_layer {
             display-name = "NUMBER";
-            // -----------------------------------------------------------------------------------------
+            // Vim-style navigation: H/J/K/L = left/down/up/right.
             // |  TAB |  1  |  2  |  3  |  4  |  5    |  LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  | BSPC |
-            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | BSPC| WORD| RGT |     |      |
-            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       | DWN |  UP |     |     |     |      |
+            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | DWN |  UP | RGT |     |      |
+            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
             //                    | GUI |     | SPC   |        | ENT   |     | SHFT |
             bindings = <
-                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7     &kp N8       &kp N9    &kp N0 &kp BSPC
-                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp BSPC   &kp LA(BSPC) &kp RIGHT &trans &trans
-                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &kp DOWN &kp UP     &trans         &trans    &trans &trans
-                                                       &kp LGUI     &trans       &kp SPACE                        &kp RET  &trans     &kp RSHFT
+                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
+                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
+                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &trans
+                                                       &kp LGUI     &trans       &kp SPACE                        &kp RET  &trans   &kp RSHFT
             >;
         };
 
         raise_layer {
             display-name = "SYMBOL";
             /*
-             * SYMBOL is intentionally arranged for macOS with the Danish
-             * input source active. The keycodes below are physical HID
-             * positions plus modifiers, not US-layout symbol aliases.
+             * Danish macOS symbol/edit layer.
+             * J = delete character (Backspace)
+             * K = delete previous word (Option+Backspace)
              *
              * Left hand                               Right hand
              * |CmdTab| ! | @ | # | $ | % |           | & | * | ( | ) | ? |BSPC|
-             * | Ctrl | < | > | = | + | - |           | [ | ] | { | } | | | \\ |
-             * | Shft | ; | : | ' | \" | ` |          | / | _ |   |   |   | Esc |
+             * | Ctrl | < | > | = | + | - |           | [ |DEL|WORD| ] | | | \\ |
+             * | Shft | ; | : | ' | \" | ` |          | / | _ | { | } |   | Esc |
              *                     |GUI|  |SPC|       |ENT|SYM|SHFT|
              */
             bindings = <
                 &app_switch_tab &kp LS(N1)    &kp LA(BSLH) &kp LS(N3)       &kp GRAVE      &kp LS(N5)       &kp LCTRL &kp RCTRL &kp LS(N6)        &kp LS(BSLH)      &kp LS(N8)        &kp LS(N9)        &kp LS(MINUS)     &kp BSPC
-                &kp LCTRL       &kp NUBS      &kp LS(NUBS) &kp LS(N0)       &kp MINUS      &kp FSLH         &kp LALT  &kp RALT  &kp LA(N8)        &kp LA(N9)        &kp LS(LA(N8))    &kp LS(LA(N9))    &kp LA(I)          &kp LS(LA(N7))
-                &kp LSHFT       &kp LS(COMMA) &kp LS(DOT)  &kp BSLH         &kp LS(N2)     &dk_grave                                &kp LS(N7)        &kp LS(FSLH)      &trans             &trans             &trans             &kp ESC
+                &kp LCTRL       &kp NUBS      &kp LS(NUBS) &kp LS(N0)       &kp MINUS      &kp FSLH         &kp LALT  &kp RALT  &kp LA(N8)        &kp BSPC          &kp LA(BSPC)      &kp LA(N9)        &kp LA(I)          &kp LS(LA(N7))
+                &kp LSHFT       &kp LS(COMMA) &kp LS(DOT)  &kp BSLH         &kp LS(N2)     &dk_grave                                &kp LS(N7)        &kp LS(FSLH)      &kp LS(LA(N8))     &kp LS(LA(N9))     &trans             &kp ESC
                                                              &kp LGUI        &trans         &kp SPACE                                &kp RET           &trans             &kp RSHFT
             >;
         };
