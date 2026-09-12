@@ -16,6 +16,60 @@
 };
 
 / {
+    behaviors {
+        kt_on: key_toggle_on_only {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            display-name = "Key Toggle On";
+            toggle-mode = "on";
+        };
+
+        kt_off: key_toggle_off_only {
+            compatible = "zmk,behavior-key-toggle";
+            #binding-cells = <1>;
+            display-name = "Key Toggle Off";
+            toggle-mode = "off";
+        };
+    };
+
+    macros {
+        /*
+         * Hold this thumb key to enable SYMBOL.
+         * Releasing it also guarantees that Command is released if the
+         * app-switcher macro below latched it while SYMBOL was held.
+         */
+        sym_layer: sym_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings =
+                <&macro_press &mo 2>,
+                <&macro_pause_for_release>,
+                <&macro_release &mo 2>,
+                <&macro_tap &kt_off LGUI>;
+        };
+
+        /*
+         * SYMBOL + Tab starts/continues the normal macOS Cmd+Tab switcher.
+         * Command stays held while SYMBOL is held, so Tab can be fluttered.
+         */
+        app_switch_tab: app_switch_tab {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <5>;
+            tap-ms = <5>;
+            bindings = <&kt_on LGUI>, <&kp TAB>;
+        };
+
+        /* Danish macOS: the grave key is dead, so tap it followed by space. */
+        dk_grave: dk_grave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(EQUAL)>, <&kp SPACE>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -25,12 +79,12 @@
             // |  TAB |  Q  |  W  |  E  |  R  |  T  |  MUTE |  PP   |  Y  |  U   |  I  |  O  |  P  | BSPC |
             // | CTRL |  A  |  S  |  D  |  F  |  G  |  LALT |  RALT |  H  |  J   |  K  |  L  |  ;  |  '   |
             // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
-            //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
+            //                    | GUI | NUM | SPC |               | ENT | SYM  | SHFT |
             bindings = <
                 &kp TAB   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
                 &kp LCTRL &kp A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
                 &kp LSHFT &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                      &kp LGUI &mo 1 &kp SPACE              &kp RET &mo 2 &kp RALT
+                                      &kp LGUI &mo 1 &kp SPACE              &kp RET &sym_layer &kp RSHFT
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN &inc_dec_kp C_PREV C_NEXT &inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
@@ -39,29 +93,35 @@
             display-name = "NUMBER";
             // -----------------------------------------------------------------------------------------
             // |  TAB |  1  |  2  |  3  |  4  |  5    |  LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  | BSPC |
-            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
-            //                    | GUI |     | SPC   |        | ENT   |     | ALT |
+            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | BSPC| WORD| RGT |     |      |
+            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       | DWN |  UP |     |     |     |      |
+            //                    | GUI |     | SPC   |        | ENT   |     | SHFT |
             bindings = <
-                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &trans
-                                                       &kp LGUI     &trans       &kp SPACE                        &kp LGUI &trans   &kp SPACE
+                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7     &kp N8       &kp N9    &kp N0 &kp BSPC
+                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp BSPC   &kp LA(BSPC) &kp RIGHT &trans &trans
+                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &kp DOWN &kp UP     &trans         &trans    &trans &trans
+                                                       &kp LGUI     &trans       &kp SPACE                        &kp RET  &trans     &kp RSHFT
             >;
         };
 
         raise_layer {
             display-name = "SYMBOL";
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  !  |  @  |  #  |  $  |  %  | LCTRL | RCTRL |  ^  |  &  |  *  |  (  |  )  | BSPC |
-            // | CTRL | HUD | HUI |     |     |     |  LALT | RALT  |  -  |  =  |  [  |  ]  |  \  |  `   |
-            // | SHFT |     |     |     |     |     |               |  _  |  +  |  {  |  }  | "|" |  ~   |
-            //                    | GUI |     | SPC |               | ENT |     | ALT |
+            /*
+             * SYMBOL is intentionally arranged for macOS with the Danish
+             * input source active. The keycodes below are physical HID
+             * positions plus modifiers, not US-layout symbol aliases.
+             *
+             * Left hand                               Right hand
+             * |CmdTab| ! | @ | # | $ | % |           | & | * | ( | ) | ? |BSPC|
+             * | Ctrl | < | > | = | + | - |           | [ | ] | { | } | | | \\ |
+             * | Shft | ; | : | ' | \" | ` |          | / | _ |   |   |   | Esc |
+             *                     |GUI|  |SPC|       |ENT|SYM|SHFT|
+             */
             bindings = <
-                &kp  TAB  &kp EXCL        &kp AT          &kp HASH &kp DLLR &kp PRCNT &kp LCTRL &kp RCTRL &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-                &kp LCTRL &rgb_ug RGB_HUD &rgb_ug RGB_HUI &trans   &trans   &trans    &kp LALT  &kp RALT  &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
-                &kp LSHFT &trans          &trans          &trans   &trans   &trans                        &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
-                                                          &kp LGUI &trans   &kp SPACE                     &kp RET   &trans    &kp RALT
+                &app_switch_tab &kp LS(N1)    &kp LA(BSLH) &kp LS(N3)       &kp GRAVE      &kp LS(N5)       &kp LCTRL &kp RCTRL &kp LS(N6)        &kp LS(BSLH)      &kp LS(N8)        &kp LS(N9)        &kp LS(MINUS)     &kp BSPC
+                &kp LCTRL       &kp NUBS      &kp LS(NUBS) &kp LS(N0)       &kp MINUS      &kp FSLH         &kp LALT  &kp RALT  &kp LA(N8)        &kp LA(N9)        &kp LS(LA(N8))    &kp LS(LA(N9))    &kp LA(I)          &kp LS(LA(N7))
+                &kp LSHFT       &kp LS(COMMA) &kp LS(DOT)  &kp BSLH         &kp LS(N2)     &dk_grave                                &kp LS(N7)        &kp LS(FSLH)      &trans             &trans             &trans             &kp ESC
+                                                             &kp LGUI        &trans         &kp SPACE                                &kp RET           &trans             &kp RSHFT
             >;
         };
 
@@ -71,7 +131,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -81,7 +141,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -91,7 +151,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -101,7 +161,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -111,7 +171,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
 
@@ -121,7 +181,7 @@
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+                                     &trans &trans &trans               &trans &trans &trans
             >;
         };
     };
