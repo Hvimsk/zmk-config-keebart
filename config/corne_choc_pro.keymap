@@ -133,13 +133,20 @@
 
         extra_layer_1 {
             display-name = "NUM+SYM";
-            // Automatically active while NUMBER and SYMBOL are both held.
-            // J = forward Delete; everything else falls through.
+            /*
+             * Automatically active while NUMBER and SYMBOL are both held.
+             * J = forward Delete.
+             * RGB controls:
+             *   R = toggle RGB       T = next effect
+             *   Y = previous effect  U/I = brightness down/up
+             *   O/P = speed down/up
+             * Everything else falls through to NUMBER/SYMBOL.
+             */
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp DEL &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans
+                &trans &trans &trans &trans &rgb_ug RGB_TOG &rgb_ug RGB_EFF &trans &trans &rgb_ug RGB_EFR &rgb_ug RGB_BRD &rgb_ug RGB_BRI &rgb_ug RGB_SPD &rgb_ug RGB_SPI &trans
+                &trans &trans &trans &trans &trans           &trans          &trans &trans &trans          &kp DEL          &trans          &trans          &trans          &trans
+                &trans &trans &trans &trans &trans           &trans                        &trans          &trans           &trans          &trans          &trans          &trans
+                                     &trans &trans &trans                                  &trans          &trans           &trans
             >;
         };
 
