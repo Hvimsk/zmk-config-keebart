@@ -119,19 +119,17 @@
 
         lower_layer {
             display-name = "NUMBER";
-            // Vim navigation on H/J/K/L.
-            // Tab uses the same Cmd+Tab latch as SYMBOL; releasing NUM releases Command.
-            // Hold F for Control+Option (Magnet), then use H/J/K/L for window movement.
+            // Left-hand numpad: Q/W/E = 7/8/9, A/S/D = 4/5/6, Z/X/C = 1/2/3, V = 0.
+            // Hold F for Control+Option (Magnet); H/J/K/L remain Left/Down/Up/Right.
+            // Tab latches Cmd+Tab; releasing NUM releases Command.
+            // Displaced Bluetooth and maintenance keys are on NUM+SYM.
+            // G and SEMI still select Bluetooth profiles 5 and 4; B still unlocks Studio.
             // Backspace intentionally exists only on SYMBOL.
-            // |CmdTab|  1  |  2  |  3  |  4  |  5    | OFF   | OFF   |  6  |  7  |  8  |  9  |  0  |      |
-            // | ESC  | BT1 | BT2 | BT3 |C+OPT| BT5   | OFF   | OFF   | LEFT| DOWN| UP  |RIGHT| BT4 |      |
-            // |SHFT  |BTCR | RGB | RST | BOOT| Unlock|              |     |     |     |     |     | CTRL |
-            //                    | GUI |     | SPC   |              | ENT |     | SHFT |
             bindings = <
-                &app_switch_tab &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &none     &none     &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &trans
-                &kp ESC         &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &ctrl_option_hold &bt BT_SEL 4 &none    &none    &kp LEFT &kp DOWN &kp UP &kp RIGHT &bt BT_SEL 3 &trans
-                &kp LSHFT       &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &kp LCTRL
-                                                         &kp LGUI     &trans       &kp SPACE                        &kp RET  &trans   &kp RSHFT
+                &app_switch_tab      &kp N7               &kp N8               &kp N9               &none                &none                &none                &none                &none                &none                &none                &none                &none                &trans
+                &kp ESC              &kp N4               &kp N5               &kp N6               &ctrl_option_hold    &bt BT_SEL 4         &none                &none                &kp LEFT             &kp DOWN             &kp UP               &kp RIGHT            &bt BT_SEL 3         &trans
+                &kp LSHFT            &kp N1               &kp N2               &kp N3               &kp N0               &studio_unlock       &trans               &trans               &trans               &trans               &trans               &kp LCTRL
+                &kp LGUI             &trans               &kp SPACE            &kp RET              &trans               &kp RSHFT
             >;
         };
 
@@ -169,13 +167,15 @@
              *   R = toggle RGB       T = next effect
              *   Y = previous effect  U/I = brightness down/up
              *   O/P = speed down/up
+             * A/S/D = Bluetooth profiles 1/2/3; Z = clear current Bluetooth profile.
+             * X = toggle RGB; C = reset; V = bootloader.
              * Everything else falls through to NUMBER/SYMBOL.
              */
             bindings = <
-                &trans &trans &trans &trans &rgb_ug RGB_TOG &rgb_ug RGB_EFF &none  &none  &rgb_ug RGB_EFR &rgb_ug RGB_BRD &rgb_ug RGB_BRI &rgb_ug RGB_SPD &rgb_ug RGB_SPI &trans
-                &trans &trans &trans &trans &trans           &trans          &none  &none  &trans          &kp DEL          &trans          &trans          &trans          &trans
-                &trans &trans &trans &trans &trans           &trans                        &trans          &trans           &trans          &trans          &trans          &trans
-                                     &trans &trans &trans                                  &trans          &trans           &trans
+                &trans               &trans               &trans               &trans               &rgb_ug RGB_TOG      &rgb_ug RGB_EFF      &none                &none                &rgb_ug RGB_EFR      &rgb_ug RGB_BRD      &rgb_ug RGB_BRI      &rgb_ug RGB_SPD      &rgb_ug RGB_SPI      &trans
+                &trans               &bt BT_SEL 0         &bt BT_SEL 1         &bt BT_SEL 2         &trans               &trans               &none                &none                &trans               &kp DEL              &trans               &trans               &trans               &trans
+                &trans               &bt BT_CLR           &rgb_ug RGB_TOG      &sys_reset           &bootloader          &trans               &trans               &trans               &trans               &trans               &trans               &trans
+                &trans               &trans               &trans               &trans               &trans               &trans
             >;
         };
 
