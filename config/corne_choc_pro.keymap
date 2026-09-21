@@ -138,6 +138,7 @@
             /*
              * Danish macOS symbol/edit layer.
              * W = @ via Option + the Danish apostrophe key (HID BSLH).
+             * The base-layer minus key also sends underscore while SYMBOL is held.
              * J = Backspace
              * K = delete previous word (Option+Backspace)
              * Backspace intentionally lives only on this layer.
@@ -145,7 +146,7 @@
              * Left hand                              Right hand
              * |CmdTab| ! | @ | # | $ | % |          | ( | ) | [ | ] | ? |BSPC|
              * | ESC  | ` | ~ | = | + | - |          | { |BSPC|WORD| } | \\ | | |
-             * | SHFT | < | > | / | * | & |          | ' | \" | _ | : |   |CTRL|
+             * | SHFT | < | > | / | * | & |          | ' | \" | _ | : | _ |CTRL|
              *                    |GUI|  |SPC|        |ENT|SYM|SHFT|
              *
              * The symbol bindings use the physical HID combinations for
@@ -154,7 +155,7 @@
             bindings = <
                 &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp RA(N4)   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
                 &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp RA(N7) &kp BSPC   &kp LA(BSPC) &kp RA(N0)   &kp RA(NUBS)  &kp RA(EQUAL)
-                &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &trans         &kp LCTRL
+                &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
             >;
         };
