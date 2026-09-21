@@ -100,15 +100,17 @@
     keymap {
         compatible = "zmk,keymap";
 
+        // The four extra inner keys are disabled with &none on every layer.
+
         default_layer {
             display-name = "QWERTY";
-            // | TAB |  Q  |  W  |  E  |  R  |  T  | MUTE | PP   |  Y  |  U  |  I  |  O  |  P  |  Å   |
-            // | ESC |  A  |  S  |  D  |  F  |  G  | LALT | RALT |  H  |  J  |  K  |  L  |  Æ  |  Ø   |
+            // | TAB |  Q  |  W  |  E  |  R  |  T  | OFF  | OFF  |  Y  |  U  |  I  |  O  |  P  |  Å   |
+            // | ESC |  A  |  S  |  D  |  F  |  G  | OFF  | OFF  |  H  |  J  |  K  |  L  |  Æ  |  Ø   |
             // |SHFT |  Z  |  X  |  C  |  V  |  B  |             |  N  |  M  |  ,  |  .  |  /  | CTRL |
             //                   | GUI | NUM | SPC |             | ENT | SYM | SHFT |
             bindings = <
-                &kp TAB   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp LBKT
-                &kp ESC   &kp A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+                &kp TAB   &kp Q &kp W &kp E &kp R &kp T &none      &none    &kp Y &kp U  &kp I     &kp O   &kp P    &kp LBKT
+                &kp ESC   &kp A &kp S &kp D &kp F &kp G &none      &none    &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
                 &kp LSHFT &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp LCTRL
                                       &kp LGUI &num_layer &kp SPACE          &kp RET &sym_layer &kp RSHFT
             >;
@@ -121,13 +123,13 @@
             // Tab uses the same Cmd+Tab latch as SYMBOL; releasing NUM releases Command.
             // Hold F for Control+Option (Magnet), then use H/J/K/L for window movement.
             // Backspace intentionally exists only on SYMBOL.
-            // |CmdTab|  1  |  2  |  3  |  4  |  5    | LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  |      |
-            // | ESC  | BT1 | BT2 | BT3 |C+OPT| BT5   | LALT  | RALT  | LEFT| DOWN| UP  |RIGHT| BT4 |      |
+            // |CmdTab|  1  |  2  |  3  |  4  |  5    | OFF   | OFF   |  6  |  7  |  8  |  9  |  0  |      |
+            // | ESC  | BT1 | BT2 | BT3 |C+OPT| BT5   | OFF   | OFF   | LEFT| DOWN| UP  |RIGHT| BT4 |      |
             // |SHFT  |BTCR | RGB | RST | BOOT| Unlock|              |     |     |     |     |     | CTRL |
             //                    | GUI |     | SPC   |              | ENT |     | SHFT |
             bindings = <
-                &app_switch_tab &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &trans
-                &kp ESC         &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &ctrl_option_hold &bt BT_SEL 4 &kp LALT &kp RALT &kp LEFT &kp DOWN &kp UP &kp RIGHT &bt BT_SEL 3 &trans
+                &app_switch_tab &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &none     &none     &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &trans
+                &kp ESC         &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &ctrl_option_hold &bt BT_SEL 4 &none    &none    &kp LEFT &kp DOWN &kp UP &kp RIGHT &bt BT_SEL 3 &trans
                 &kp LSHFT       &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &kp LCTRL
                                                          &kp LGUI     &trans       &kp SPACE                        &kp RET  &trans   &kp RSHFT
             >;
@@ -151,8 +153,8 @@
              * the Danish keyboard layout rather than US-layout symbol aliases.
              */
             bindings = <
-                &app_switch_tab &kp LS(N1)   &kp RA(N2)   &kp LS(N3)  &kp RA(N4)   &kp LS(N5)  &kp LCTRL &kp RCTRL &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
-                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &kp LALT  &kp RALT  &kp RA(N7) &kp BSPC   &kp LA(BSPC) &kp RA(N0)   &kp RA(NUBS)  &kp RA(EQUAL)
+                &app_switch_tab &kp LS(N1)   &kp RA(N2)   &kp LS(N3)  &kp RA(N4)   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
+                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp RA(N7) &kp BSPC   &kp LA(BSPC) &kp RA(N0)   &kp RA(NUBS)  &kp RA(EQUAL)
                 &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &trans         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
             >;
@@ -170,8 +172,8 @@
              * Everything else falls through to NUMBER/SYMBOL.
              */
             bindings = <
-                &trans &trans &trans &trans &rgb_ug RGB_TOG &rgb_ug RGB_EFF &trans &trans &rgb_ug RGB_EFR &rgb_ug RGB_BRD &rgb_ug RGB_BRI &rgb_ug RGB_SPD &rgb_ug RGB_SPI &trans
-                &trans &trans &trans &trans &trans           &trans          &trans &trans &trans          &kp DEL          &trans          &trans          &trans          &trans
+                &trans &trans &trans &trans &rgb_ug RGB_TOG &rgb_ug RGB_EFF &none  &none  &rgb_ug RGB_EFR &rgb_ug RGB_BRD &rgb_ug RGB_BRI &rgb_ug RGB_SPD &rgb_ug RGB_SPI &trans
+                &trans &trans &trans &trans &trans           &trans          &none  &none  &trans          &kp DEL          &trans          &trans          &trans          &trans
                 &trans &trans &trans &trans &trans           &trans                        &trans          &trans           &trans          &trans          &trans          &trans
                                      &trans &trans &trans                                  &trans          &trans           &trans
             >;
@@ -180,8 +182,8 @@
         extra_layer_2 {
             display-name = "EXTRA 2";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
                                      &trans &trans &trans               &trans &trans &trans
             >;
@@ -190,8 +192,8 @@
         extra_layer_3 {
             display-name = "EXTRA 3";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
                                      &trans &trans &trans               &trans &trans &trans
             >;
@@ -200,8 +202,8 @@
         extra_layer_4 {
             display-name = "EXTRA 4";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
                                      &trans &trans &trans               &trans &trans &trans
             >;
@@ -210,8 +212,8 @@
         extra_layer_5 {
             display-name = "EXTRA 5";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
                                      &trans &trans &trans               &trans &trans &trans
             >;
@@ -220,8 +222,8 @@
         extra_layer_6 {
             display-name = "EXTRA 6";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &none  &none  &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
                                      &trans &trans &trans               &trans &trans &trans
             >;
