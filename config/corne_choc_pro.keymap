@@ -137,6 +137,7 @@
             display-name = "SYMBOL";
             /*
              * Danish macOS symbol/edit layer.
+             * W = @ via Option + the Danish apostrophe key (HID BSLH).
              * J = Backspace
              * K = delete previous word (Option+Backspace)
              * Backspace intentionally lives only on this layer.
@@ -151,7 +152,7 @@
              * the Danish keyboard layout rather than US-layout symbol aliases.
              */
             bindings = <
-                &app_switch_tab &kp LS(N1)   &kp RA(N2)   &kp LS(N3)  &kp RA(N4)   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
+                &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp RA(N4)   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
                 &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp RA(N7) &kp BSPC   &kp LA(BSPC) &kp RA(N0)   &kp RA(NUBS)  &kp RA(EQUAL)
                 &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &trans         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
