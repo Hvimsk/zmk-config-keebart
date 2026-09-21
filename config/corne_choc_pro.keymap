@@ -26,7 +26,7 @@
             // --------------------------------------------------------------------------------
             // |  TAB |  Q  |  W  |  E  |  R  |  T  | OFF   | OFF   |  Y  |  U   |  I  |  O  |  P  | BSPC |
             // | CTRL |  A  |  S  |  D  |  F  |  G  | OFF   | OFF   |  H  |  J   |  K  |  L  |  ;  |  '   |
-            // | SHFT |  Z  |  X  |  C  |  V  |  B  | OFF           | OFF |  M   |  ,  |  .  |  /  | ESC  |
+            // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
             //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
             bindings = <
                 &kp TAB   &kp Q &kp W &kp E &kp R &kp T &none      &none    &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
@@ -42,7 +42,7 @@
             // -----------------------------------------------------------------------------------------
             // |  TAB |  1  |  2  |  3  |  4  |  5    | OFF    | OFF   |  6  |  7  |  8  |  9  |  0  | BSPC |
             // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   | OFF    | OFF   | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT | BTCR| RGB | RST | BOOT| Unlock| OFF    | OFF   |     |     |     |     |     |      |
+            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
             //                    | GUI |     | SPC   |        | ENT   |     | ALT |
             bindings = <
                 &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &none     &none     &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
@@ -57,7 +57,7 @@
             // -----------------------------------------------------------------------------------------
             // |  TAB |  !  |  @  |  #  |  $  |  %  | OFF   | OFF   |  ^  |  &  |  *  |  (  |  )  | BSPC |
             // | CTRL | HUD | HUI |     |     |     | OFF   | OFF   |  -  |  =  |  [  |  ]  |  \  |  `   |
-            // | SHFT |     |     |     |     |     | OFF           | OFF |  +  |  {  |  }  | "|" |  ~   |
+            // | SHFT |     |     |     |     |     |               |  _  |  +  |  {  |  }  | "|" |  ~   |
             //                    | GUI |     | SPC |               | ENT |     | ALT |
             bindings = <
                 &kp  TAB  &kp EXCL        &kp AT          &kp HASH &kp DLLR &kp PRCNT &none     &none     &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
