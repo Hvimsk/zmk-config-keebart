@@ -6,6 +6,7 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/modifiers.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
 
@@ -17,6 +18,25 @@
 
 / {
     behaviors {
+
+        /* Both left modifiers must be held before E: send Cmd+Shift+4.
+         * Keep the physical modifiers; releasing E releases only the chosen key.
+         */
+        screenshot_shift: screenshot_shift {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp E>, <&kp N4>;
+            mods = <MOD_LSFT>;
+            keep-mods = <MOD_LSFT>;
+        };
+
+        screenshot_e: screenshot_e {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp E>, <&screenshot_shift>;
+            mods = <MOD_LGUI>;
+            keep-mods = <MOD_LGUI>;
+        };
         kt_on: key_toggle_on_only {
             compatible = "zmk,behavior-key-toggle";
             #binding-cells = <1>;
@@ -109,7 +129,7 @@
             // |SHFT |  Z  |  X  |  C  |  V  |  B  |             |  N  |  M  |  ,  |  .  |  /  | CTRL |
             //                   | GUI | NUM | SPC |             | ENT | SYM | SHFT |
             bindings = <
-                &kp TAB   &kp Q &kp W &kp E &kp R &kp T &none      &none    &kp Y &kp U  &kp I     &kp O   &kp P    &kp LBKT
+                &kp TAB   &kp Q &kp W &screenshot_e &kp R &kp T &none      &none    &kp Y &kp U  &kp I     &kp O   &kp P    &kp LBKT
                 &kp ESC   &kp A &kp S &kp D &kp F &kp G &none      &none    &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
                 &kp LSHFT &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp LCTRL
                                       &kp LGUI &num_layer &kp SPACE          &kp RET &sym_layer &kp RSHFT
@@ -140,6 +160,7 @@
              * R = dollar via Shift+Option+3.
              * The far-right top-row key (base Å) sends Cmd+Shift+4 on SYMBOL.
              * The far-right home-row key (base Ø) sends pipe via Option+I.
+             * Æ sends backslash via Shift+Option+7.
              * The bottom-right key remains Control.
              * H/L = braces via Shift+Option+8/9 on Danish macOS.
              * W = @ via Option + the Danish apostrophe key (HID BSLH).
@@ -159,7 +180,7 @@
              */
             bindings = <
                 &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp LG(LS(N4))
-                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp RA(NUBS)  &kp RA(I)
+                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp LS(RA(N7))  &kp RA(I)
                 &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
             >;
