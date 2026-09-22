@@ -138,7 +138,8 @@
             /*
              * Danish macOS symbol/edit layer.
              * R = dollar via Shift+Option+3.
-             * The far-right home-row key (base Ø) sends Cmd+Shift+4 on SYMBOL.
+             * The far-right top-row key (base Å) sends Cmd+Shift+4 on SYMBOL.
+             * The far-right home-row key (base Ø) sends pipe via Option+I.
              * The bottom-right key remains Control.
              * H/L = braces via Shift+Option+8/9 on Danish macOS.
              * W = @ via Option + the Danish apostrophe key (HID BSLH).
@@ -148,8 +149,8 @@
              * Backspace intentionally lives only on this layer.
              *
              * Left hand                              Right hand
-             * |CmdTab| ! | @ | # | $ | % |          | ( | ) | [ | ] | ? |BSPC|
-             * | ESC  | ` | ~ | = | + | - |          | { |BSPC|WORD| } | \\ |Shot|
+             * |CmdTab| ! | @ | # | $ | % |          | ( | ) | [ | ] | ? |Shot|
+             * | ESC  | ` | ~ | = | + | - |          | { |BSPC|WORD| } | \\ |Pipe|
              * | SHFT | < | > | / | * | & |          | ' | \" | _ | : | _ |CTRL|
              *                    |GUI|  |SPC|        |ENT|SYM|SHFT|
              *
@@ -157,8 +158,8 @@
              * the Danish keyboard layout rather than US-layout symbol aliases.
              */
             bindings = <
-                &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp BSPC
-                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp RA(NUBS)  &kp LG(LS(N4))
+                &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp LG(LS(N4))
+                &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp RA(NUBS)  &kp RA(I)
                 &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
             >;
