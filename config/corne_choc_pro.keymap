@@ -95,7 +95,7 @@
             bindings = <&kp LS(EQUAL)>, <&kp SPACE>;
         };
 
-        /* NUMBER + V: hold macOS Control + Option until V is released. */
+        /* NUMBER + F: hold macOS Control + Option until F is released. */
         ctrl_option_hold: ctrl_option_hold {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -139,9 +139,9 @@
 
         lower_layer {
             display-name = "NUMBER";
-            // Left-hand numpad: Q/W/E = 7/8/9, A/S/D = 4/5/6, Z/X/C = 1/2/3, F = 0.
+            // Left-hand numpad: Q/W/E = 7/8/9, A/S/D = 4/5/6, Z/X/C = 1/2/3, V = 0.
             // R = colon (:) via Shift+period on Danish macOS; keep NUM held to type times.
-            // Hold V for Control+Option (Magnet); H/J/K/L remain Left/Down/Up/Right.
+            // Hold F for Control+Option (Magnet); H/J/K/L remain Left/Down/Up/Right.
             // Outer right thumb = Right Command on NUMBER; base/SYMBOL keep Right Shift.
             // Right Command is independent of the Left Command Cmd+Tab latch.
             // Tab latches Cmd+Tab; releasing NUM releases latched Left Command.
@@ -150,8 +150,8 @@
             // Backspace intentionally exists only on SYMBOL.
             bindings = <
                 &app_switch_tab      &kp N7               &kp N8               &kp N9               &kp LS(DOT)                &none                &none                &none                &none                &none                &none                &none                &none                &trans
-                &kp ESC              &kp N4               &kp N5               &kp N6               &kp N0               &bt BT_SEL 4         &none                &none                &kp LEFT             &kp DOWN             &kp UP               &kp RIGHT            &bt BT_SEL 3         &trans
-                &kp LSHFT            &kp N1               &kp N2               &kp N3               &ctrl_option_hold    &studio_unlock       &trans               &trans               &trans               &trans               &trans               &kp LCTRL
+                &kp ESC              &kp N4               &kp N5               &kp N6               &ctrl_option_hold    &bt BT_SEL 4         &none                &none                &kp LEFT             &kp DOWN             &kp UP               &kp RIGHT            &bt BT_SEL 3         &trans
+                &kp LSHFT            &kp N1               &kp N2               &kp N3               &kp N0               &studio_unlock       &trans               &trans               &trans               &trans               &trans               &kp LCTRL
                 &kp LGUI             &trans               &kp SPACE            &kp RET              &trans               &kp RGUI
             >;
         };
