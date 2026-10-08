@@ -95,7 +95,7 @@
             bindings = <&kp LS(EQUAL)>, <&kp SPACE>;
         };
 
-        /* NUMBER + F: hold macOS Control + Option until F is released. */
+        /* NUMBER + V: hold macOS Control + Option until V is released. */
         ctrl_option_hold: ctrl_option_hold {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -139,18 +139,20 @@
 
         lower_layer {
             display-name = "NUMBER";
-            // Left-hand numpad: Q/W/E = 7/8/9, A/S/D = 4/5/6, Z/X/C = 1/2/3, V = 0.
+            // Left-hand numpad: Q/W/E = 7/8/9, A/S/D = 4/5/6, Z/X/C = 1/2/3, F = 0.
             // R = colon (:) via Shift+period on Danish macOS; keep NUM held to type times.
-            // Hold F for Control+Option (Magnet); H/J/K/L remain Left/Down/Up/Right.
-            // Tab latches Cmd+Tab; releasing NUM releases Command.
+            // Hold V for Control+Option (Magnet); H/J/K/L remain Left/Down/Up/Right.
+            // Outer right thumb = Right Command on NUMBER; base/SYMBOL keep Right Shift.
+            // Right Command is independent of the Left Command Cmd+Tab latch.
+            // Tab latches Cmd+Tab; releasing NUM releases latched Left Command.
             // Displaced Bluetooth and maintenance keys are on NUM+SYM.
             // G and SEMI still select Bluetooth profiles 5 and 4; B still unlocks Studio.
             // Backspace intentionally exists only on SYMBOL.
             bindings = <
                 &app_switch_tab      &kp N7               &kp N8               &kp N9               &kp LS(DOT)                &none                &none                &none                &none                &none                &none                &none                &none                &trans
-                &kp ESC              &kp N4               &kp N5               &kp N6               &ctrl_option_hold    &bt BT_SEL 4         &none                &none                &kp LEFT             &kp DOWN             &kp UP               &kp RIGHT            &bt BT_SEL 3         &trans
-                &kp LSHFT            &kp N1               &kp N2               &kp N3               &kp N0               &studio_unlock       &trans               &trans               &trans               &trans               &trans               &kp LCTRL
-                &kp LGUI             &trans               &kp SPACE            &kp RET              &trans               &kp RSHFT
+                &kp ESC              &kp N4               &kp N5               &kp N6               &kp N0               &bt BT_SEL 4         &none                &none                &kp LEFT             &kp DOWN             &kp UP               &kp RIGHT            &bt BT_SEL 3         &trans
+                &kp LSHFT            &kp N1               &kp N2               &kp N3               &ctrl_option_hold    &studio_unlock       &trans               &trans               &trans               &trans               &trans               &kp LCTRL
+                &kp LGUI             &trans               &kp SPACE            &kp RET              &trans               &kp RGUI
             >;
         };
 
@@ -159,7 +161,7 @@
             /*
              * Danish macOS symbol/edit layer.
              * R = dollar via Shift+Option+3.
-             * The far-right top-row key (base Å) sends Cmd+Shift+4 on SYMBOL.
+             * The far-right top-row key (base Å) is disabled on SYMBOL.
              * The far-right home-row key (base Ø) sends pipe via Option+I.
              * Æ sends backslash via Shift+Option+7.
              * The bottom-right key remains Control.
@@ -171,16 +173,18 @@
              * Backspace intentionally lives only on this layer.
              *
              * Left hand                              Right hand
-             * |CmdTab| ! | @ | # | $ | % |          | ( | ) | [ | ] | ? |Shot|
+             * |CmdTab| ! | @ | # | $ | % |          | ( | ) | [ | ] | ? | OFF|
              * | ESC  | ` | ~ | = | + | - |          | { |BSPC|WORD| } | \\ |Pipe|
              * | SHFT | < | > | / | * | & |          | ' | \" | _ | : | _ |CTRL|
              *                    |GUI|  |SPC|        |ENT|SYM|SHFT|
              *
+             * Z/X = </> via the ISO extra key (NUBS / Shift+NUBS).
+             * Host input source must be Danish, with the keyboard identified as ISO.
              * The symbol bindings use the physical HID combinations for
              * the Danish keyboard layout rather than US-layout symbol aliases.
              */
             bindings = <
-                &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &kp LG(LS(N4))
+                &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &none
                 &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp LS(RA(N7))  &kp RA(I)
                 &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
