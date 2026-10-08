@@ -178,15 +178,16 @@
              * | SHFT | < | > | / | * | & |          | ' | \" | _ | : | _ |CTRL|
              *                    |GUI|  |SPC|        |ENT|SYM|SHFT|
              *
-             * Z/X = </> via the ISO extra key (NUBS / Shift+NUBS).
-             * Host input source must be Danish, with the keyboard identified as ISO.
+             * Z/X = </> via GRAVE / Shift+GRAVE for this Mac's Danish mapping.
+             * NUBS / Shift+NUBS produced $ / section sign on the user's Mac;
+             * macOS keyboard-type translation swaps these two physical key positions.
              * The symbol bindings use the physical HID combinations for
              * the Danish keyboard layout rather than US-layout symbol aliases.
              */
             bindings = <
                 &app_switch_tab &kp LS(N1)   &kp RA(BSLH)   &kp LS(N3)  &kp LS(RA(N3))   &kp LS(N5)  &none     &none     &kp LS(N8) &kp LS(N9) &kp RA(N8)   &kp RA(N9)   &kp LS(MINUS) &none
                 &kp ESC         &dk_grave     &kp RA(RBKT) &kp LS(N0)  &kp MINUS    &kp FSLH    &none     &none     &kp LS(RA(N8)) &kp BSPC   &kp LA(BSPC) &kp LS(RA(N9))   &kp LS(RA(N7))  &kp RA(I)
-                &kp LSHFT       &kp NUBS      &kp LS(NUBS)&kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
+                &kp LSHFT       &kp GRAVE     &kp LS(GRAVE) &kp LS(N7)  &kp LS(BSLH) &kp LS(N6)                         &kp BSLH   &kp LS(N2) &kp LS(FSLH) &kp LS(DOT)  &kp LS(FSLH)         &kp LCTRL
                                                          &kp LGUI      &trans        &kp SPACE                          &kp RET    &trans     &kp RSHFT
             >;
         };
